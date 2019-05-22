@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Spring Boot and Thymeleaf example</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<pre>
+<span th:text="${value1}"></span>
+<span th:text="${value2}"></span>
+<span th:text="${colors}"></span>
+迭代：
+<ol>  
+      <li>List循环：  
+            <table border="1">    
+              <tr  th:each="color : ${colors}">  
+                <th th:text="${color}"></th>  
+              </tr>  
+            </table>  
+        </li> 
+        <li>Map循环：  
+            <div th:each="num:${map}">  
+            <span th:text="${num.key}" />    <span th:text="${num.value}"/>  
+            </div>  
+        </li>  
+ <span th:text="${user.name}" />       
+ <span th:text="${user.description}" >查找有没有getDescription方法</span>   
+ 
+ 定义变量：
+ <div th:with="param1=myparam1">
+ <a th:href="@{/link(p1=${param1})}">link</a>
+  <span th:text="${param1}"/>
+ </div>
+ 使用replace属性或者include属性
+<div th:include="footer :: copyright"></div> 
+  	
+</pre>
+</body>
+</html>
