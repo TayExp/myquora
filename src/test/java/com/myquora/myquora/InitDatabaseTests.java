@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Sql("/init-schema.sql")
+//@Sql("/init-schema.sql")
 
 public class InitDatabaseTests {
 
