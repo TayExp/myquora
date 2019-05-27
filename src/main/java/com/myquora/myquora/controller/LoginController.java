@@ -30,7 +30,7 @@ public class LoginController {
 	public String login(Model model, 
 			@RequestParam("username") String username,
 			@RequestParam("password") String password,
-			@RequestParam("next") String next,
+			@RequestParam(value="next", required=false) String next,
 			@RequestParam(value="rememberme", defaultValue = "false")boolean rememberme, // 有默认值显式写出来value参数
 			HttpServletResponse response //下发ticket到cookie里
 			) {
@@ -64,7 +64,7 @@ public class LoginController {
 	public String reg(Model model, 
 			@RequestParam("username") String username,
 			@RequestParam("password") String password,
-			@RequestParam("next") String next,
+			@RequestParam(value="next",required=false) String next,
 			@RequestParam(value="rememberme", defaultValue = "false")boolean rememberme, // 有默认值显式写出来value参数
 			HttpServletResponse response //下发ticket到cookie里
 			) {

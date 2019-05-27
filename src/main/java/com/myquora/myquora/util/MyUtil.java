@@ -1,12 +1,16 @@
 package com.myquora.myquora.util;
 
 import java.security.MessageDigest;
+import java.util.Map;
+
+import com.alibaba.fastjson.JSONObject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MyUtil {
 	private static final Logger logger = LoggerFactory.getLogger(MyUtil.class);
+	public static int ANONYMOUS_USERID = 0;
 	public static String MD5(String key) {
 		char hexDigits[] = {
 	              '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
@@ -33,5 +37,26 @@ public class MyUtil {
 	            logger.error("生成MD5失败", e);
 	            return null;
 	        }
+	}
+	
+	//重载overload方法，参数不同
+	public static String getJSONString(int code, String message) {
+		JSONObject json = new JSONObject();
+		json.put("code", code);
+		json.put("msg", message);
+		return json.toJSONString();
+	}
+	public static String getJSONString(int code) {
+		JSONObject json = new JSONObject();
+		json.put("code", code);
+		return json.toJSONString();
+	}
+	public static String getJSONString(int code, Map<String, Object> map) {
+		JSONObject json = new JSONObject();
+		json.put("code", code);
+		for(Map.Entry<String, Object> entry : map.entrySet()) {
+			json.put(entry.getKey(), entry.getValue());
+		}
+		return json.toJSONString();
 	}
 }

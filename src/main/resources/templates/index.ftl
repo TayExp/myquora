@@ -27,10 +27,7 @@
                                         <img src="${vo.user.headUrl}" class="zm-item-img-avatar"></a>
                                 </div>
                                 <div class="feed-main">
-                                    <div class="feed-source" data-za-module="FeedSource">热门回答，来自
-                                        <a href="https://nowcoder.com/topic/19562033" data-tip="t$t$19562033" data-token="19562033" data-topicid="3946" target="_blank">人际交往</a>
-                                        <a data-follow="t:link" href="javascript:;" class="zg-follow zu-autohide follow-topic zu-edit-button" data-id="3946">关注话题</a></div>
-                                    <div class="feed-content" data-za-module="AnswerItem">
+                                	<div class="feed-content" data-za-module="AnswerItem">
                                         <meta itemprop="answer-id" content="389034">
                                         <meta itemprop="answer-url-token" content="13174385">
                                         <h2 class="feed-title">
@@ -39,20 +36,8 @@
                                             <div class="question-description-plain zm-editable-content"></div>
                                         </div>
                                         <div class="expandable entry-body">
-                                            <!-- <link itemprop="url" href="/question/19857995/answer/13174385">
-                                            <meta itemprop="answer-id" content="389034">
-                                            <meta itemprop="answer-url-token" content="13174385"> -->
                                             <div class="zm-item-vote">
                                                 <a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-bind-votecount="">4168</a></div>
-                                            <div class="zm-votebar" data-za-module="VoteBar">
-                                                <button class="up" aria-pressed="false" title="赞同">
-                                                    <i class="icon vote-arrow"></i>
-                                                    <span class="count">4168</span>
-                                                    <span class="label sr-only">赞同</span></button>
-                                                <button class="down" aria-pressed="false" title="反对，不会显示你的姓名">
-                                                    <i class="icon vote-arrow"></i>
-                                                    <span class="label sr-only">反对，不会显示你的姓名</span></button>
-                                            </div>
                                             <div class="zm-item-answer-author-info">
                                                 <a class="author-link" data-tip="p$b$amuro1230" target="_blank" href="/user/${vo.user.id}">${vo.user.name}</a>
                                              	 <span>${vo.question.createdDate?string('yyyy-MM-dd HH:mm:ss')}</span>
@@ -73,24 +58,16 @@
                                                         <i class="z-icon-follow"></i>关注问题</a>
                                                     <a href="#" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
                                                         <i class="z-icon-comment"></i>${vo.question.commentCount}条评论</a>
-                                                    <a href="#" class="meta-item js-thank" data-thanked="false">
-                                                        <i class="z-icon-thank"></i>感谢</a>
-
 
                                                     <button class="meta-item item-collapse js-collapse">
                                                         <i class="z-icon-fold"></i>收起</button>
                                                 </div>
                                             </div>
-                                            <a href="#" class="ignore zu-autohide" name="dislike" data-tip="s$b$不感兴趣"></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="undo-dislike-options" data-item_id="2">此内容将不会在动态中再次显示
-                                <span class="zg-bull">•</span>
-                                <a href="#" class="meta-item revert">撤销</a>
-                                <a href="#" class="ignore zu-autohide close"></a>
-                            </div>
+                            
                         </div>
                     </#list>
                     

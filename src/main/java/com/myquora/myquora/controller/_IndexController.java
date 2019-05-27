@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.myquora.myquora.model.User;
 
 @Controller
-public class IndexController {
+public class _IndexController {
 
 	@RequestMapping(path= {"/hello"})
 	@ResponseBody
@@ -44,6 +44,6 @@ public class IndexController {
         }
         model.addAttribute("map", map);
         model.addAttribute("user",new User("LEE"));
-		return "home"; //返回一个home的模板
+		return "_home"; //返回一个home的模板
 	}
 }
