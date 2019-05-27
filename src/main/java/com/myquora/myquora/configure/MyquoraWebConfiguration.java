@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;;
 
@@ -29,5 +30,10 @@ public class MyquoraWebConfiguration  implements WebMvcConfigurer{
 		registry.addInterceptor(passportInterceptor);
 		registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("/user/*");
 	}
+	
+//	@Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+//    }
 	
 }
