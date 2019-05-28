@@ -1,4 +1,4 @@
-#parse("header.html")
+<#include "/header.html">
 <link rel="stylesheet" href="../styles/detail.css">
 <div class="zg-wrap zu-main clearfix with-indention-votebar" itemscope="" itemtype="http://schema.org/Question"
      id="zh-single-question-page" data-urltoken="36301524" role="main">
@@ -6,33 +6,20 @@
         <div class="zu-main-content-inner">
             <meta itemprop="isTopQuestion" content="false">
             <meta itemprop="visitsCount" content="402">
-            <!--
-            <div class="zm-tag-editor zg-section">
-                <div class="zm-tag-editor-labels zg-clear">
-                    <a data-tip="t$b$19550730" class="zm-item-tag" href="">新浪微博</a>
-                    <a data-tip="t$b$19554412" class="zm-item-tag" href="">网络营销</a>
-                    <a data-tip="t$b$19559739" class="zm-item-tag" href="">微博粉丝</a>
-                    <a data-tip="t$b$19560290" class="zm-item-tag" href="">僵尸粉</a>
-                    <a data-tip="t$b$19565757" class="zm-item-tag" href="">网络水军</a>
-                    <a href="javascript:;" class="zu-edit-button" name="edit">
-                        <i class="zu-edit-button-icon"></i>修改</a>
-                </div>
-            </div>
-            -->
             <div id="zh-question-title" data-editable="true" class="zm-editable-status-normal">
                 <h2 class="zm-item-title">
 
-                    <span class="zm-editable-content">$!{question.title}</span>
+                    <span class="zm-editable-content">${question.title}</span>
 
                 </h2>
             </div>
             <div id="zh-question-detail" class="zm-item-rich-text zm-editable-status-normal">
-                <div class="zm-editable-content">$!{question.content}</div>
+                <div class="zm-editable-content">${question.content}</div>
             </div>
             <div class="zm-side-section">
                 <div class="zm-side-section-inner" id="zh-question-side-header-wrap">
                     <button data-follow="q:m:button" class="follow-button zg-follow zg-btn-green" data-id="6727688">
-                        关注问题
+                       	 关注问题
                     </button>
                     <div class="zh-question-followers-sidebar">
                         <div class="zg-gray-normal">
@@ -77,7 +64,8 @@
                  data-widget="navigable" data-navigable-options="{&quot;items&quot;: &quot;&gt;.zm-item-answer&quot;}"
                  data-init="{&quot;params&quot;: {&quot;url_token&quot;: 36301524, &quot;pagesize&quot;: 10, &quot;offset&quot;: 0}, &quot;nodename&quot;: &quot;QuestionAnswerListV2&quot;}">
 
-                #foreach($comment in $comments)
+				<#list comments as comment>
+                
                 <div tabindex="-1" class="zm-item-answer  zm-item-expanded" itemprop="topAnswer" itemscope=""
                      itemtype="http://schema.org/Answer" data-aid="22162611" data-atoken="66862039" data-collapsed="0"
                      data-created="1444310527" data-deleted="0" data-helpful="1" data-isowner="0" data-copyable="1"
@@ -99,9 +87,9 @@
                         <div class="zm-item-answer-author-info">
                             <a class="zm-item-link-avatar avatar-link" href="" target="_blank"
                                data-tip="p$t$yingxiaodao">
-                                <img src="$comment.user.headUrl"
+                                <img src="${comment.user.headUrl}"
                                      class="zm-list-avatar avatar"></a>
-                            <a class="author-link" target="_blank" href="/user/$comment.user.id">$comment.user.name</a>
+                            <a class="author-link" target="_blank" href="/user/${comment.user.id}">${comment.user.name}</a>
                             </div>
                         <div class="zm-item-vote-info" data-votecount="28" data-za-module="VoteInfo">
                                 <span class="voters text">
@@ -113,14 +101,14 @@
                          data-action="/answer/content" data-author-name="营销岛"
                          data-entry-url="/question/36301524/answer/66862039">
                         <div class="zm-editable-content clearfix">
-                            $comment.comment.content
+                            ${comment.comment.content}
                         </div>
                     </div>
                     <a class="zg-anchor-hidden ac" name="22162611-comment"></a>
                     <div class="zm-item-meta answer-actions clearfix js-contentActions">
                         <div class="zm-meta-panel">
                             <a itemprop="url" class="answer-date-link meta-item" target="_blank" href="">发布于
-                                $date.format('yyyy-MM-dd HH:mm:ss', $comment.comment.createdDate)</a>
+                               <span>${comment.comment.createdDate?string('yyyy-MM-dd HH:mm:ss')}</span> 
 
                             <!--
                             <a href="" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
@@ -135,11 +123,13 @@
                         </div>
                     </div>
                 </div>
-                #end
+                
+                </#list>
+                
             </div>
             <a name="draft"></a>
             <form action="/addComment" method="post" id="commentform">
-                <input type="hidden" name="questionId" value="$question.id"/>
+                <input type="hidden" name="questionId" value="${question.id}"/>
             <div id="zh-question-answer-form-wrap" class="zh-question-answer-form-wrap">
                 <div class="zm-editable-editor-wrap" style="">
                     <div class="zm-editable-editor-outer">
@@ -159,4 +149,4 @@
         </div>
     </div>
 </div>
-#parse("footer.html")
+<#include "/footer.html">
