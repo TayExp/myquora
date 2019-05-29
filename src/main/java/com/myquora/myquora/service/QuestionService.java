@@ -12,6 +12,8 @@ import com.myquora.myquora.model.Question;
 public class QuestionService {
 	@Autowired
 	QuestionDAO questionDAO;
+	@Autowired
+	SensitiveService sensitiveService;
 	
 	public Question getById(int id) {
 		return questionDAO.getByid(id);
@@ -20,10 +22,10 @@ public class QuestionService {
 	public int addQuestion(Question question) {
 		// 去除HTML格式
 		question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
-		question.setContent(HtmlUtils.htmlEscape(question.getContent()));
+		question.setContent(sensitiveService.filter(question.getContent()));
 		// 敏感词过滤
 		question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
-		question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
+		question.setTitle(sensitiveService.filter(question.getTitle()));
 		return questionDAO.addQuestion(question) > 0 ? question.getId():0;
 	}
 	

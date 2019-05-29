@@ -21,7 +21,9 @@ import com.myquora.myquora.model.HostHolder;
 import com.myquora.myquora.model.Question;
 import com.myquora.myquora.model.ViewObject;
 import com.myquora.myquora.service.CommentService;
+import com.myquora.myquora.service.LikeService;
 import com.myquora.myquora.service.QuestionService;
+import com.myquora.myquora.service.SensitiveService;
 import com.myquora.myquora.service.UserService;
 import com.myquora.myquora.util.MyUtil;
 
@@ -30,7 +32,7 @@ public class QuestionController {
 
 	private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 	
-   @Autowired
+    @Autowired
     QuestionService questionService;
 
     @Autowired
@@ -41,6 +43,9 @@ public class QuestionController {
 
     @Autowired
     UserService userService;
+    
+    @Autowired
+    LikeService likeService;
 	
 	@RequestMapping(value = "/question/add", method = {RequestMethod.POST})
 	@ResponseBody
@@ -64,7 +69,7 @@ public class QuestionController {
 		return MyUtil.getJSONString(1,"失败");
 	}
 	
-	@RequestMapping(value = "/question/{qid}", method = {RequestMethod.GET})
+	@RequestMapping(value = "/question/{qid}", method = {RequestMethod.GET, RequestMethod.POST})
 	public String questionDetail(Model model, @PathVariable("qid") int qid) {
 		Question question = questionService.getById(qid);
 		model.addAttribute("question", question);
@@ -74,6 +79,12 @@ public class QuestionController {
 			ViewObject vo = new ViewObject();
 			vo.set("comment", comment);
 			vo.set("user", userService.getUser(comment.getUserId()));
+			if(hostHolder.getUser() == null) {
+				vo.set("liked", 0);
+			} else {
+				vo.set("liked", likeService.getLikeStatus(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, comment.getId()));
+			}
+			vo.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
 			vos.add(vo);
 		}
 		model.addAttribute("comments", vos);

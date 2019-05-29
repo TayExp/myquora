@@ -66,22 +66,38 @@
 
 				<#list comments as comment>
                 
-                <div tabindex="-1" class="zm-item-answer  zm-item-expanded" itemprop="topAnswer" itemscope=""
-                     itemtype="http://schema.org/Answer" data-aid="22162611" data-atoken="66862039" data-collapsed="0"
-                     data-created="1444310527" data-deleted="0" data-helpful="1" data-isowner="0" data-copyable="1"
-                     data-za-module="AnswerItem">
+                <div class="zm-item-answer  zm-item-expanded js-comment">
                     <link itemprop="url" href="">
                     <meta itemprop="answer-id" content="22162611">
                     <meta itemprop="answer-url-token" content="66862039">
                     <a class="zg-anchor-hidden" name="answer-22162611"></a>
-                    <div class="zm-votebar goog-scrollfloater" data-za-module="VoteBar">
-                        <button class="up" aria-pressed="false" title="赞同">
+
+                    <div class="zm-votebar goog-scrollfloater js-vote" data-id="${comment.comment.id}">
+                        <#if comment.liked gt 0 >
+                        <button class="up js-like pressed" title="赞同">
                             <i class="icon vote-arrow"></i>
-                            <span class="count">28</span>
-                            <span class="label sr-only">赞同</span></button>
-                        <button class="down" aria-pressed="false" title="反对，不会显示你的姓名">
+                            <span class="count js-voteCount">${comment.likeCount}</span>
+                            <span class="label sr-only">赞同</span>
+                        </button>
+                        <#else>
+                        <button class="up js-like" title="赞同">
+                         <i class="icon vote-arrow"></i>
+                            <span class="count js-voteCount">${comment.likeCount}</span>
+                            <span class="label sr-only">赞同</span>
+						</button>
+						</#if>
+                        <#if comment.liked lt 0 >
+                        <button class="down js-dislike pressed" title="反对，不会显示你的姓名">
                             <i class="icon vote-arrow"></i>
-                            <span class="label sr-only">反对，不会显示你的姓名</span></button>
+                            <span class="label sr-only">反对，不会显示你的姓名</span>
+                        </button>
+                        <#else>
+                         <button class="down js-dislike" title="反对，不会显示你的姓名">
+                        
+                            <i class="icon vote-arrow"></i>
+                            <span class="label sr-only">反对，不会显示你的姓名</span>
+                        </button>
+                        </#if>
                     </div>
                     <div class="answer-head">
                         <div class="zm-item-answer-author-info">

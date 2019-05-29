@@ -18,6 +18,10 @@ public class CommentService {
 		return commentDAO.selectByEntity(entityId, entityType);
 	} 
 	
+	public Comment getCommentById(int id) {
+        return commentDAO.getCommentById(id);
+    }
+	
 	public int addComment(Comment comment) {
 		return commentDAO.addComment(comment);
 	}
@@ -26,8 +30,8 @@ public class CommentService {
 		return commentDAO.getCommentCount(entityId, entityType);
 	}
 	
-	public void deleteComment(int entityId, int entityType) {
-		commentDAO.updateStatus(entityId, entityType, 1);
-	}
+	public boolean deleteComment(int commentId) {
+        return commentDAO.updateStatus(commentId, 1) > 0;
+    }
 	
 }

@@ -49,11 +49,9 @@ public class CommentController {
 			} else {
 				comment.setUserId(MyUtil.ANONYMOUS_USERID);
 			}
-			System.out.println(content);
 			content = HtmlUtils.htmlEscape(content);
 			comment.setContent(sensitiveService.filter(content));
 			comment.setEntityId(questionId);
-			System.out.println(questionService.getById(questionId).getContent());
 			comment.setEntityType(EntityType.ENTITY_QUESTION);
 			comment.setCreatedDate(new Date());
 			comment.setStatus(0);
