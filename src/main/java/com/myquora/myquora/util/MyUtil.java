@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 public class MyUtil {
 	private static final Logger logger = LoggerFactory.getLogger(MyUtil.class);
+	public static final int SYSTEM_USERID = 1;
 	public static int ANONYMOUS_USERID = 4;//设成0引发错误
 	public static String MD5(String key) {
 		char hexDigits[] = {

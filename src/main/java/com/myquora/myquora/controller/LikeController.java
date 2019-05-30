@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.myquora.myquora.async.EventModel;
+import com.myquora.myquora.async.EventProducer;
+import com.myquora.myquora.async.EventType;
 import com.myquora.myquora.model.Comment;
 import com.myquora.myquora.model.EntityType;
 import com.myquora.myquora.model.HostHolder;
@@ -33,6 +36,8 @@ public class LikeController {
     @Autowired
     LikeService likeService;
     
+    @Autowired
+    EventProducer eventProducer;
 	
 	@RequestMapping(value = "/like", method = {RequestMethod.POST})
 	@ResponseBody
@@ -40,12 +45,12 @@ public class LikeController {
 		if(hostHolder.getUser() == null) {
 			return MyUtil.getJSONString(999);//未登录
 		}
-		 Comment comment = commentService.getCommentById(commentId);
-		 	//异步：
-//	        eventProducer.fireEvent(new EventModel(EventType.LIKE)
-//	                .setActorId(hostHolder.getUser().getId()).setEntityId(commentId)
-//	                .setEntityType(EntityType.ENTITY_COMMENT).setEntityOwnerId(comment.getUserId())
-//	                .setExt("questionId", String.valueOf(comment.getEntityId())));
+		Comment comment = commentService.getCommentById(commentId);
+	 	//异步：// return this 可链式set
+        eventProducer.fireEvent(new EventModel(EventType.LIKE)
+                .setActorId(hostHolder.getUser().getId()).setEntityId(commentId)
+                .setEntityType(EntityType.ENTITY_COMMENT).setEntityOwnerId(comment.getUserId())
+                .setExt("questionId", String.valueOf(comment.getEntityId())));
 		long likeCount = likeService.like(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, commentId);
 		return MyUtil.getJSONString(0, String.valueOf(likeCount));
 	}
