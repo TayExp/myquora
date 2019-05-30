@@ -125,17 +125,6 @@
                         <div class="zm-meta-panel">
                             <a itemprop="url" class="answer-date-link meta-item" target="_blank" href="">发布于
                                <span>${comment.comment.createdDate?string('yyyy-MM-dd HH:mm:ss')}</span> 
-
-                            <!--
-                            <a href="" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
-                                <i class="z-icon-comment"></i>4 条评论</a>
-                            <a href="" class="meta-item zu-autohide js-thank" data-thanked="false">
-                                <i class="z-icon-thank"></i>感谢</a>
-
-                            <button class="item-collapse js-collapse" style="transition: none;">
-                                <i class="z-icon-fold"></i>收起
-                            </button>
-                            -->
                         </div>
                     </div>
                 </div>
@@ -161,7 +150,6 @@
                 </div>
             </div>
             </form>
-
         </div>
     </div>
 </div>

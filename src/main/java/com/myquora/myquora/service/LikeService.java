@@ -35,7 +35,6 @@ public class LikeService {
 
         String disLikeKey = RedisKeyUtil.getDisLikeKey(entityType, entityId);
         jedisAdapter.srem(disLikeKey, String.valueOf(userId));
-
         return jedisAdapter.scard(likeKey);
     }
 

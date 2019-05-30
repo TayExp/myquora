@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.myquora.myquora.model.Comment;
 import com.myquora.myquora.model.EntityType;
@@ -34,6 +35,7 @@ public class LikeController {
     
 	
 	@RequestMapping(value = "/like", method = {RequestMethod.POST})
+	@ResponseBody
 	public String like(@RequestParam("commentId")int commentId) {
 		if(hostHolder.getUser() == null) {
 			return MyUtil.getJSONString(999);//未登录
@@ -49,6 +51,7 @@ public class LikeController {
 	}
 
 	@RequestMapping(value = "/dislike", method = {RequestMethod.POST})
+	@ResponseBody
 	public String dislike(@RequestParam("commentId")int commentId) {
 		if(hostHolder.getUser() == null) {
 			return MyUtil.getJSONString(999);//未登录

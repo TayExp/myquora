@@ -48,7 +48,7 @@ public class QuestionController {
     LikeService likeService;
 	
 	@RequestMapping(value = "/question/add", method = {RequestMethod.POST})
-	@ResponseBody
+	@ResponseBody  //返回json串的时候要写response注解
 	public String addQuestion(@RequestParam("title")String title, @RequestParam("content")String content) {
 		try {
 			Question question = new Question();
