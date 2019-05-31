@@ -4,6 +4,7 @@ package com.myquora.myquora.controller;
 
 import java.util.*;
 
+import org.hamcrest.core.IsInstanceOf;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.myquora.myquora.model.EntityType;
+import com.myquora.myquora.model.HostHolder;
 import com.myquora.myquora.model.Question;
+import com.myquora.myquora.model.User;
 import com.myquora.myquora.model.ViewObject;
+import com.myquora.myquora.service.CommentService;
+import com.myquora.myquora.service.FollowService;
 import com.myquora.myquora.service.QuestionService;
 import com.myquora.myquora.service.UserService;
 
@@ -27,8 +33,15 @@ public class HomeController {
 	@Autowired
 	QuestionService questionService;
 	
+    @Autowired
+    FollowService followService;
+
+    @Autowired
+    CommentService commentService;
+
+    @Autowired
+    HostHolder hostHolder;
 	
-	//pop
 	@RequestMapping(path= {"/", "/index"}, method= {RequestMethod.GET, RequestMethod.POST})
 	public String index(Model model,
 			@RequestParam(value="pop", defaultValue="0") int pop) {
@@ -43,6 +56,7 @@ public class HomeController {
 	    	ViewObject vo = new ViewObject();
 	        vo.set("question", question);
 	        vo.set("user", userService.getUser(question.getUserId()));
+	        vo.set("followCount", followService.getFollowerCount(EntityType.ENTITY_QUESTION, question.getId()));
 	        vos.add(vo);
 	    }
 		return vos;
@@ -51,6 +65,19 @@ public class HomeController {
     @RequestMapping(path = {"/user/{userId}"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String userIndex(Model model, @PathVariable("userId") int userId) {
         model.addAttribute("vos", getQuestions(userId, 0, 10));
-		return "index";
-	}
+        User user = userService.getUser(userId);
+        ViewObject vo = new ViewObject();
+        vo.set("user", user);
+       
+        vo.set("commentCount", commentService.getUserCommentCount(userId));
+        vo.set("followerCount", followService.getFollowerCount(EntityType.ENTITY_USER, userId));
+        vo.set("followeeCount", followService.getFolloweeCount(userId, EntityType.ENTITY_USER));
+        if (hostHolder.getUser() != null) {
+            vo.set("followed", followService.isFollower(hostHolder.getUser().getId(), EntityType.ENTITY_USER, userId));
+        } else {
+            vo.set("followed", false);
+        }
+        model.addAttribute("profileUser", vo);
+        return "profile";
+    }
 }

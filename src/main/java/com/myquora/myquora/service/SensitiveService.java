@@ -151,7 +151,6 @@ public class SensitiveService implements InitializingBean{
             while ((lineTxt = bufferedReader.readLine()) != null) {
                 lineTxt = lineTxt.trim();
                 addWord(lineTxt);
-                System.out.println(lineTxt.trim());
             }
             read.close();
         } catch (Exception e) {

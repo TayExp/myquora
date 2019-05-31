@@ -14,8 +14,11 @@ import org.springframework.test.context.jdbc.Sql;
 
 import com.myquora.myquora.dao.QuestionDAO;
 import com.myquora.myquora.dao.UserDAO;
+import com.myquora.myquora.model.EntityType;
 import com.myquora.myquora.model.Question;
 import com.myquora.myquora.model.User;
+import com.myquora.myquora.service.FollowService22;
+
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +33,9 @@ public class InitDatabaseTests {
 	
 	@Autowired
 	QuestionDAO questionDAO;
+	
+	@Autowired
+	FollowService22 followService;
 	
 	@Test
 	public void contextLoads() {
@@ -48,6 +54,11 @@ public class InitDatabaseTests {
 			userDAO.addUser(user);
 			user.setPassword("newpassword");
 			userDAO.updatePassword(user);
+			
+			// 互相关注一下
+			for(int j = 1; j < i; j++) {
+				followService.follow(j, EntityType.ENTITY_USER, i);
+			}
 			
 			Question question = new Question();
 			question.setCommentCount(i);

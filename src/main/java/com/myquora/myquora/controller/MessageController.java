@@ -101,7 +101,6 @@ public class MessageController {
 			int localUserId = hostHolder.getUser().getId();
 			List<ViewObject> conversations = new ArrayList<>();
 			List<Message> conversationList = messageService.getConversationList(localUserId, 0, 10);
-			System.out.println(conversationList);
 			for(Message msg : conversationList) {
 				ViewObject vo = new ViewObject();
 				vo.set("conversation", msg);

@@ -15,15 +15,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.myquora.myquora.async.EventModel;
+import com.myquora.myquora.async.EventProducer;
+import com.myquora.myquora.async.EventType;
 import com.myquora.myquora.model.Comment;
 import com.myquora.myquora.model.EntityType;
 import com.myquora.myquora.model.HostHolder;
 import com.myquora.myquora.model.Question;
+import com.myquora.myquora.model.User;
 import com.myquora.myquora.model.ViewObject;
 import com.myquora.myquora.service.CommentService;
+import com.myquora.myquora.service.FollowService;
 import com.myquora.myquora.service.LikeService;
 import com.myquora.myquora.service.QuestionService;
-import com.myquora.myquora.service.SensitiveService;
 import com.myquora.myquora.service.UserService;
 import com.myquora.myquora.util.MyUtil;
 
@@ -46,6 +50,12 @@ public class QuestionController {
     
     @Autowired
     LikeService likeService;
+    
+    @Autowired
+    FollowService followService;
+    
+    @Autowired
+    EventProducer eventProducer;
 	
 	@RequestMapping(value = "/question/add", method = {RequestMethod.POST})
 	@ResponseBody  //返回json串的时候要写response注解
@@ -61,6 +71,10 @@ public class QuestionController {
 				question.setUserId(hostHolder.getUser().getId());
 			}
 			if(questionService.addQuestion(question) > 0) {
+				eventProducer.fireEvent(new EventModel(EventType.ADD_QUESTION)
+                        .setActorId(question.getUserId()).setEntityId(question.getId())
+                .setExt("title", question.getTitle()).setExt("content", question.getContent()));
+
 				return MyUtil.getJSONString(0);
 			}
 		} catch(Exception e) {
@@ -88,6 +102,26 @@ public class QuestionController {
 			vos.add(vo);
 		}
 		model.addAttribute("comments", vos);
+        List<ViewObject> followUsers = new ArrayList<ViewObject>();
+        // 获取关注的用户信息
+        List<Integer> users = followService.getFollowers(EntityType.ENTITY_QUESTION, qid, 20);
+        for (Integer userId : users) {
+            ViewObject vo = new ViewObject();
+            User u = userService.getUser(userId);
+            if (u == null) {
+                continue;
+            }
+            vo.set("name", u.getName());
+            vo.set("headUrl", u.getHeadUrl());
+            vo.set("id", u.getId());
+            followUsers.add(vo);
+        }
+        model.addAttribute("followUsers", followUsers);
+        if (hostHolder.getUser() != null) {
+            model.addAttribute("followed", followService.isFollower(hostHolder.getUser().getId(), EntityType.ENTITY_QUESTION, qid));
+        } else {
+            model.addAttribute("followed", false);
+        }
 		return "detail";
 	}
 }
