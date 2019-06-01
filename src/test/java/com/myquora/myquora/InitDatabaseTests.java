@@ -17,7 +17,7 @@ import com.myquora.myquora.dao.UserDAO;
 import com.myquora.myquora.model.EntityType;
 import com.myquora.myquora.model.Question;
 import com.myquora.myquora.model.User;
-import com.myquora.myquora.service.FollowService22;
+import com.myquora.myquora.service.FollowService;
 
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +35,7 @@ public class InitDatabaseTests {
 	QuestionDAO questionDAO;
 	
 	@Autowired
-	FollowService22 followService;
+	FollowService followService;
 	
 	@Test
 	public void contextLoads() {

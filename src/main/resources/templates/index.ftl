@@ -21,7 +21,7 @@
                     <div class="feed-item folding feed-item-hook feed-item-2
                         " feed-item-a="" data-type="a" id="feed-2" data-za-module="FeedItem" data-za-index="">
                             <meta itemprop="ZReactor" data-id="389034" data-meta="{&quot;source_type&quot;: &quot;promotion_answer&quot;, &quot;voteups&quot;: 
-, &quot;comments&quot;: 69, &quot;source&quot;: []}">
+								, &quot;comments&quot;: 69, &quot;source&quot;: []}">
                             <div class="feed-item-inner">
                                 <div class="avatar">
                                     <a title="${vo.user.name}" data-tip="p$t$amuro1230" class="zm-item-link-avatar" target="_blank" href="https://nowcoder.com/people/amuro1230">

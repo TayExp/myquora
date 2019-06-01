@@ -32,9 +32,10 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
     public void afterPropertiesSet() throws Exception {
         Map<String, EventHandler> beans = applicationContext.getBeansOfType(EventHandler.class);
         if (beans != null) {
+			// 从SupportEventType 到  config
             for (Map.Entry<String, EventHandler> entry : beans.entrySet()) {
                 List<EventType> eventTypes = entry.getValue().getSupportEventTypes();
-
+//				config.getOrDefault(type, new ArrayList<>()).add(entry.getValue()); //为什么不行？
                 for (EventType type : eventTypes) {
                     if (!config.containsKey(type)) {
                         config.put(type, new ArrayList<EventHandler>());
@@ -50,12 +51,12 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
                 while(true) {
                     String key = RedisKeyUtil.getEventQueueKey();
                     List<String> events = jedisAdapter.brpop(0, key);
-
                     for (String message : events) {
-                        if (message.equals(key)) {
+                    	// 第一个是key 跳过
+                        if (message.equals(key)) { 
                             continue;
                         }
-
+                        // 反序列化，生成EventModel类型
                         EventModel eventModel = JSON.parseObject(message, EventModel.class);
                         if (!config.containsKey(eventModel.getType())) {
                             logger.error("不能识别的事件");

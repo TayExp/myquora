@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.HtmlUtils;
 
+import com.myquora.myquora.async.EventModel;
+import com.myquora.myquora.async.EventProducer;
+import com.myquora.myquora.async.EventType;
 import com.myquora.myquora.model.Comment;
 import com.myquora.myquora.model.EntityType;
 import com.myquora.myquora.model.HostHolder;
@@ -39,6 +42,8 @@ public class CommentController {
     
     @Autowired
     SensitiveService sensitiveService;
+    @Autowired
+    EventProducer eventProducer;
 	
 	@RequestMapping(value = "/addComment", method = {RequestMethod.POST})
 	public String addComment(@RequestParam("questionId")int questionId, @RequestParam("content")String content) {
@@ -61,7 +66,9 @@ public class CommentController {
 			int commentCount = commentService.getCommentCount(comment.getEntityId(),comment.getEntityType());
 			questionService.updateCommentCount(comment.getEntityId(), commentCount);
 			
-			//异步化？
+			//异步化处理评论事件
+			eventProducer.fireEvent(new EventModel(EventType.COMMENT).setActorId(comment.getUserId())
+                    .setEntityId(questionId));
 			
 		} catch(Exception e) {
 			logger.error("增加评论失败" + e.getMessage());
