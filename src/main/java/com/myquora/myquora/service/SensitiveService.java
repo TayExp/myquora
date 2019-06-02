@@ -157,11 +157,4 @@ public class SensitiveService implements InitializingBean{
             logger.error("读取敏感词文件失败" + e.getMessage());
         }
 	}
-	
-	public static void main(String[] args) {
-		// simple test
-		System.out.println(new SensitiveService().filter("你好 菜△鸡"));
-	}
-
-	
 }

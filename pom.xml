@@ -12,7 +12,7 @@
 	<artifactId>myquora</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>myquora</name>
-	<description>Demo project for Spring Boot</description>
+	<packaging>war</packaging>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -39,10 +39,6 @@
       		<groupId>org.springframework.boot</groupId>
       		<artifactId>spring-boot-starter-freemarker</artifactId>
     	</dependency>
-		<!-- <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -58,6 +54,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency> <groupId>org.springframework.boot</groupId> 
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		    <scope>provided</scope> 
+		 </dependency>
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -138,6 +139,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+          			<skipTests>true</skipTests>
+       			</configuration>
 			</plugin>
 		</plugins>
 	</build>
