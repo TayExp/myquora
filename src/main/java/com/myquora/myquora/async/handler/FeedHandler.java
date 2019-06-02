@@ -49,7 +49,6 @@ public class FeedHandler implements EventHandler {
 		feed.setCreatedDate(new Date());
 		// follow 4 comment 1
 		feed.setType(model.getType().getValue());
-		System.out.println("新增的feed是类型是"+feed.getType());
 		feed.setUserId(model.getActorId());
 		feed.setData(buildFeedData(model));
 		if(feed.getData() == null) {
